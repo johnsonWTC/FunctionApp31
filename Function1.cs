@@ -10,13 +10,19 @@ using Newtonsoft.Json;
 
 namespace FunctionApp31
 {
-    public static class Function1
+    public  class Function1
     {
+        private IName _name;
+
+        public Function1(IName name)
+        {
+            _name = name;
+        }
         [FunctionName("Function1")]
-        public static async Task<IActionResult> Run(
-            [HttpTrigger(AuthorizationLevel.Function, "get", "post", Route = null)] HttpRequest req)
+        public  async Task<IActionResult> Run(
+            [HttpTrigger(AuthorizationLevel.Function, "get", "post", Route = "{name}")] HttpRequest req, string name)
         {        
-            string responseMessage =" Hello Kyle";
+            string responseMessage = _name.NameShower(name);
             return new OkObjectResult(responseMessage);
         }
     }
